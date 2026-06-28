@@ -1,0 +1,212 @@
+/* Container and Circles */
+.wpls-circles-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 10px;
+    scrollbar-width: none;
+    align-items: center;
+  justify-content: center;
+}
+.wpls-circles-container::-webkit-scrollbar { display: none; }
+
+/* Instagram Style Circle */
+.wpls-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.wpls-circle img, .wpls-circle video {
+    width: 100%;
+    height: 100%;
+    border-radius: 50% !important;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border: 3px solid #fff; /* خط سفید بین عکس و نوار رنگی */
+    background: #fff;
+}
+
+/* Fullscreen Modal */
+.wpls-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #111;
+    z-index: 999999;
+}
+/* تغییر مهم برای وسط‌چین کردن استوری در کل صفحه */
+.wpls-modal.active { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+/* Content & Media Box (Story Container) */
+.wpls-modal-content {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 9 / 16;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
+
+#wpls-media, .wpls-video-tag {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Progress Bar - تنظیم شده برای قرارگیری روی کادر استوری */
+.wpls-progress-container {
+    position: absolute;
+    top: 10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 380px; /* کمی کمتر از عرض کادر برای حاشیه */
+    display: flex;
+    gap: 5px;
+    z-index: 10;
+}
+.wpls-progress-bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.wpls-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #fff;
+}
+
+/* Navigation & Close */
+.wpls-close {
+    position: absolute;
+    top: 20px; 
+    left: calc(50% + 160px); /* قرارگیری در گوشه بالا راست کادر استوری */
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10;
+}
+.wpls-nav-left, .wpls-nav-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 50%;
+    z-index: 5;
+    cursor: pointer;
+}
+.wpls-nav-left { left: 0; }
+.wpls-nav-right { right: 0; }
+
+/* Product Auto-Card inside Story */
+.wpls-product-card {
+    display: none;
+    position: absolute;
+    bottom: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 10px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 15;
+}
+.wpls-product-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+.wpls-product-card h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+}
+.wpls-product-card .price {
+    color: #cc2366;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.wpls-product-card .wpls-btn {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+/* Skeleton Loading Wrapper */
+.wpls-skeleton-wrapper {
+    display: flex;
+    gap: 15px;
+    padding: 10px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.wpls-skeleton-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* Skeleton Item */
+.wpls-skeleton-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 80px;
+}
+
+/* Skeleton Circle */
+.wpls-skeleton-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    animation: wpls-pulse 1.5s infinite ease-in-out;
+}
+
+/* Skeleton Text Lines */
+.wpls-skeleton-text-line {
+    width: 60px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+    animation: wpls-pulse 1.5s infinite ease-in-out;
+}
+.wpls-skeleton-text-line.short {
+    width: 40px;
+}
+
+/* Pulse Animation */
+@keyframes wpls-pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}

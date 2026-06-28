@@ -1,0 +1,22 @@
+# Next.js frontend service (runs `next start` on port 3000).
+# Install: sudo cp deploy/osh-next.service /etc/systemd/system/
+# Replace __USER__ with your Linux username, then:
+#   sudo systemctl daemon-reload && sudo systemctl enable --now osh-next
+#
+# NOTE: NEXT_PUBLIC_* vars are baked in at build time from
+# nextjs-frontend/.env.production, so they are NOT set here.
+[Unit]
+Description=osh Next.js frontend
+After=network.target
+
+[Service]
+User=__USER__
+WorkingDirectory=/home/__USER__/osh/nextjs-frontend
+Environment=NODE_ENV=production
+Environment=PORT=3000
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

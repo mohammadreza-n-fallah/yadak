@@ -1,0 +1,132 @@
+[
+  {"model": "vehicles.vehiclebrand", "pk": 1, "fields": {"name": "ایران خودرو", "slug": "iran-khodro", "logo": "", "is_active": true, "order": 1}},
+  {"model": "vehicles.vehiclebrand", "pk": 2, "fields": {"name": "سایپا", "slug": "saipa", "logo": "", "is_active": true, "order": 2}},
+  {"model": "vehicles.vehiclebrand", "pk": 3, "fields": {"name": "کیا", "slug": "kia", "logo": "", "is_active": true, "order": 3}},
+  {"model": "vehicles.vehiclebrand", "pk": 4, "fields": {"name": "هیوندا", "slug": "hyundai", "logo": "", "is_active": true, "order": 4}},
+  {"model": "vehicles.vehiclebrand", "pk": 5, "fields": {"name": "پژو", "slug": "peugeot", "logo": "", "is_active": true, "order": 5}},
+  {"model": "vehicles.vehiclebrand", "pk": 6, "fields": {"name": "رنو", "slug": "renault", "logo": "", "is_active": true, "order": 6}},
+  {"model": "vehicles.vehiclebrand", "pk": 7, "fields": {"name": "تویوتا", "slug": "toyota", "logo": "", "is_active": true, "order": 7}},
+  {"model": "vehicles.vehiclebrand", "pk": 8, "fields": {"name": "نیسان", "slug": "nissan", "logo": "", "is_active": true, "order": 8}},
+
+  {"model": "vehicles.vehiclemodel", "pk": 1, "fields": {"brand": 1, "name": "پژو ۴۰۵", "slug": "peugeot-405", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 2, "fields": {"brand": 1, "name": "سمند", "slug": "samand", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 3, "fields": {"brand": 1, "name": "دنا", "slug": "dena", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 4, "fields": {"brand": 1, "name": "پارس", "slug": "pars", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 5, "fields": {"brand": 2, "name": "پراید", "slug": "pride", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 6, "fields": {"brand": 2, "name": "تیبا", "slug": "tiba", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 7, "fields": {"brand": 2, "name": "کوییک", "slug": "quick", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 8, "fields": {"brand": 3, "name": "سراتو", "slug": "cerato", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 9, "fields": {"brand": 3, "name": "اسپورتج", "slug": "sportage", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 10, "fields": {"brand": 4, "name": "النترا", "slug": "elantra", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 11, "fields": {"brand": 4, "name": "سانتافه", "slug": "santafe", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 12, "fields": {"brand": 5, "name": "پژو ۲۰۶", "slug": "peugeot-206", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 13, "fields": {"brand": 6, "name": "ال‌نود", "slug": "l90", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 14, "fields": {"brand": 7, "name": "کرولا", "slug": "corolla", "is_active": true}},
+  {"model": "vehicles.vehiclemodel", "pk": 15, "fields": {"brand": 8, "name": "ماکسیما", "slug": "maxima", "is_active": true}},
+
+  {"model": "vehicles.vehicletrim", "pk": 1, "fields": {"model": 1, "name": "GL", "year_from": 1385, "year_to": 1395, "is_active": true}},
+  {"model": "vehicles.vehicletrim", "pk": 2, "fields": {"model": 1, "name": "LX", "year_from": 1390, "year_to": 1400, "is_active": true}},
+  {"model": "vehicles.vehicletrim", "pk": 3, "fields": {"model": 2, "name": "LX", "year_from": 1383, "year_to": 1398, "is_active": true}},
+  {"model": "vehicles.vehicletrim", "pk": 4, "fields": {"model": 5, "name": "استاندارد", "year_from": 1375, "year_to": 1395, "is_active": true}},
+  {"model": "vehicles.vehicletrim", "pk": 5, "fields": {"model": 8, "name": "EX", "year_from": 1395, "year_to": null, "is_active": true}},
+  {"model": "vehicles.vehicletrim", "pk": 6, "fields": {"model": 12, "name": "SD", "year_from": 1382, "year_to": 1398, "is_active": true}},
+
+  {"model": "shop.category", "pk": 1, "fields": {"parent": null, "name": "لاستیک و چرخ", "slug": "tires-wheels", "image": "", "description": "لاستیک، رینگ و لوازم چرخ خودرو", "is_active": true, "order": 1}},
+  {"model": "shop.category", "pk": 2, "fields": {"parent": null, "name": "موتور و گیربکس", "slug": "engine-transmission", "image": "", "description": "قطعات موتور و گیربکس", "is_active": true, "order": 2}},
+  {"model": "shop.category", "pk": 3, "fields": {"parent": null, "name": "سیستم ترمز", "slug": "brake-system", "image": "", "description": "لنت، دیسک و کالیپر ترمز", "is_active": true, "order": 3}},
+  {"model": "shop.category", "pk": 4, "fields": {"parent": null, "name": "سیستم تعلیق", "slug": "suspension", "image": "", "description": "کمک فنر، بوش و قطعات تعلیق", "is_active": true, "order": 4}},
+  {"model": "shop.category", "pk": 5, "fields": {"parent": null, "name": "برق خودرو", "slug": "electrical", "image": "", "description": "دینام، استارت و سیستم برق", "is_active": true, "order": 5}},
+  {"model": "shop.category", "pk": 6, "fields": {"parent": null, "name": "بدنه و کاروسری", "slug": "body", "image": "", "description": "قطعات بدنه، شیشه و گلگیر", "is_active": true, "order": 6}},
+  {"model": "shop.category", "pk": 7, "fields": {"parent": 1, "name": "لاستیک", "slug": "tires", "image": "", "description": "", "is_active": true, "order": 1}},
+  {"model": "shop.category", "pk": 8, "fields": {"parent": 1, "name": "دیسک چرخ", "slug": "wheel-disks", "image": "", "description": "", "is_active": true, "order": 2}},
+  {"model": "shop.category", "pk": 9, "fields": {"parent": 3, "name": "دیسک ترمز", "slug": "brake-kits", "image": "", "description": "", "is_active": true, "order": 1}},
+  {"model": "shop.category", "pk": 10, "fields": {"parent": 3, "name": "لنت ترمز", "slug": "brake-pads", "image": "", "description": "", "is_active": true, "order": 2}},
+
+  {"model": "shop.brand", "pk": 1, "fields": {"name": "بوش", "slug": "bosch", "logo": "", "description": "", "is_active": true, "order": 1}},
+  {"model": "shop.brand", "pk": 2, "fields": {"name": "فیلیپس", "slug": "philips", "logo": "", "description": "", "is_active": true, "order": 2}},
+  {"model": "shop.brand", "pk": 3, "fields": {"name": "اسپکتر", "slug": "specter", "logo": "", "description": "", "is_active": true, "order": 3}},
+  {"model": "shop.brand", "pk": 4, "fields": {"name": "STP", "slug": "stp", "logo": "", "description": "", "is_active": true, "order": 4}},
+  {"model": "shop.brand", "pk": 5, "fields": {"name": "AIR", "slug": "air", "logo": "", "description": "", "is_active": true, "order": 5}},
+
+  {"model": "shop.product", "pk": 1, "fields": {
+    "category": 9, "brand": 3, "name": "دیسک ترمز اسپکتر", "slug": "specter-brake-kit",
+    "part_number": "SP-BK-001", "description": "دیسک ترمز با کیفیت بالا مناسب برای انواع خودروهای سواری",
+    "short_description": "دیسک ترمز اسپکتر با ضمانت ۱ سال", "price": 1200000, "sale_price": null,
+    "stock": 15, "badge": "original", "is_active": true, "is_featured": true, "weight": "1.500",
+    "created_at": "2025-01-01T10:00:00Z", "updated_at": "2025-01-01T10:00:00Z",
+    "compatible_vehicles": [1, 2, 6]
+  }},
+  {"model": "shop.product", "pk": 2, "fields": {
+    "category": 9, "brand": 1, "name": "دیسک ترمز ام وی ام", "slug": "brake-kit",
+    "part_number": "BK-MVM-002", "description": "دیسک ترمز مناسب برای خودروهای ام وی ام",
+    "short_description": "دیسک ترمز باکیفیت", "price": 980000, "sale_price": 850000,
+    "stock": 8, "badge": "sale", "is_active": true, "is_featured": false, "weight": "1.200",
+    "created_at": "2025-01-02T10:00:00Z", "updated_at": "2025-01-02T10:00:00Z",
+    "compatible_vehicles": [3, 4]
+  }},
+  {"model": "shop.product", "pk": 3, "fields": {
+    "category": 9, "brand": 1, "name": "دیسک ترمز هیوندای", "slug": "simple",
+    "part_number": "BK-HYU-003", "description": "دیسک ترمز برای هیوندای النترا",
+    "short_description": "کیفیت اصلی", "price": 1500000, "sale_price": null,
+    "stock": 0, "badge": "", "is_active": true, "is_featured": true, "weight": "1.800",
+    "created_at": "2025-01-03T10:00:00Z", "updated_at": "2025-01-03T10:00:00Z",
+    "compatible_vehicles": [5]
+  }},
+  {"model": "shop.product", "pk": 4, "fields": {
+    "category": 5, "brand": 2, "name": "دینام فیلیپس زانتیا", "slug": "stp-generator-platinum",
+    "part_number": "DY-ZAN-004", "description": "دینام فیلیپس مناسب برای زانتیا",
+    "short_description": "ناموجود - به زودی", "price": 3500000, "sale_price": null,
+    "stock": 0, "badge": "", "is_active": true, "is_featured": false, "weight": "3.200",
+    "created_at": "2025-01-04T10:00:00Z", "updated_at": "2025-01-04T10:00:00Z",
+    "compatible_vehicles": []
+  }},
+  {"model": "shop.product", "pk": 5, "fields": {
+    "category": 4, "brand": 1, "name": "سیستم تعلیق بادی برای پژو", "slug": "air-suspension-for-brandix-car",
+    "part_number": "SUS-PEU-005", "description": "کمک فنر بادی مناسب برای پژو ۴۰۵",
+    "short_description": "کمک فنر بادی باکیفیت", "price": 2800000, "sale_price": 2500000,
+    "stock": 5, "badge": "sale", "is_active": true, "is_featured": true, "weight": "2.000",
+    "created_at": "2025-01-05T10:00:00Z", "updated_at": "2025-01-05T10:00:00Z",
+    "compatible_vehicles": [1, 2]
+  }},
+  {"model": "shop.product", "pk": 6, "fields": {
+    "category": 6, "brand": 1, "name": "قفل درب ماشین لکسوس", "slug": "brandix-car-door-lock",
+    "part_number": "DL-LEX-006", "description": "قفل درب خودروی لکسوس",
+    "short_description": "قفل درب اصلی", "price": 450000, "sale_price": null,
+    "stock": 20, "badge": "new", "is_active": true, "is_featured": false, "weight": "0.300",
+    "created_at": "2025-01-06T10:00:00Z", "updated_at": "2025-01-06T10:00:00Z",
+    "compatible_vehicles": []
+  }},
+  {"model": "shop.product", "pk": 7, "fields": {
+    "category": 6, "brand": 1, "name": "آینه بغل پژو", "slug": "side-rearview-mirror",
+    "part_number": "MR-PEU-007", "description": "آینه بغل پژو ۴۰۵ و ۲۰۶",
+    "short_description": "آینه بغل با شیشه اصلی", "price": 750000, "sale_price": null,
+    "stock": 12, "badge": "", "is_active": true, "is_featured": true, "weight": "0.500",
+    "created_at": "2025-01-07T10:00:00Z", "updated_at": "2025-01-07T10:00:00Z",
+    "compatible_vehicles": [1, 6]
+  }},
+  {"model": "shop.product", "pk": 8, "fields": {
+    "category": 2, "brand": 5, "name": "فیلتر هوا اسپرت", "slug": "air-filter-from-ashs-chainsaw",
+    "part_number": "AF-SPT-008", "description": "فیلتر هوای اسپرت مناسب برای انواع خودرو",
+    "short_description": "فیلتر هوا با عمر طولانی", "price": 320000, "sale_price": 280000,
+    "stock": 30, "badge": "hot", "is_active": true, "is_featured": true, "weight": "0.200",
+    "created_at": "2025-01-08T10:00:00Z", "updated_at": "2025-01-08T10:00:00Z",
+    "compatible_vehicles": [1, 2, 3, 4, 5, 6]
+  }},
+
+  {"model": "blog.postcategory", "pk": 1, "fields": {"name": "آموزش", "slug": "education"}},
+  {"model": "blog.postcategory", "pk": 2, "fields": {"name": "اخبار خودرو", "slug": "car-news"}},
+  {"model": "blog.postcategory", "pk": 3, "fields": {"name": "راهنمای خرید", "slug": "buying-guide"}},
+
+  {"model": "core.sitesettings", "pk": 1, "fields": {
+    "site_name": "فروشگاه قطعات خودرو",
+    "site_logo": "",
+    "phone": "091212345678",
+    "email": "info@autoparts.ir",
+    "address": "تهران، خیابان ملت، کوچه کاوه پلاک ۷۸",
+    "working_hours": "شنبه تا چهارشنبه ۹:۰۰ الی ۱۸:۰۰ | پنجشنبه ۹:۰۰ الی ۱۴:۰۰",
+    "instagram": "",
+    "telegram": "",
+    "whatsapp": "09121234567",
+    "footer_text": "یدک‌بار در تمام نقاط ایران، با یک تماس، یا یک اشاره به اپلیکیشن یا سایت، در اختیار شماست"
+  }}
+]
