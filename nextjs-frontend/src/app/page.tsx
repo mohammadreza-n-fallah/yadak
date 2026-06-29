@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 async function getHomepageData(): Promise<HomepageData | null> {
   try {
-    const res = await fetch('http://localhost:8000/api/shop/', { next: { revalidate: 60 } });
+    const res = await fetch('http://127.0.0.1:8000/api/shop/', { next: { revalidate: 60 } });
     if (!res.ok) return null;
     return res.json();
   } catch { return null; }

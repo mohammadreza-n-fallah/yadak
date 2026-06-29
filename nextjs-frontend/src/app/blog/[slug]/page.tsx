@@ -10,7 +10,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://autoparts.ir';
 
 async function getPost(slug: string): Promise<PostDetail | null> {
   try {
-    const r = await fetch(`http://localhost:8000/api/blog/${slug}/`, { next: { revalidate: 60 } });
+    const r = await fetch(`http://127.0.0.1:8000/api/blog/${slug}/`, { next: { revalidate: 60 } });
     if (!r.ok) return null;
     return r.json();
   } catch { return null; }

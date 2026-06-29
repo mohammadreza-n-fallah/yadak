@@ -37,7 +37,7 @@ interface SearchParams { [key: string]: string | string[] | undefined }
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const r = await fetch('http://localhost:8000/api/shop/categories/', { next: { revalidate: 300 } });
+    const r = await fetch('http://127.0.0.1:8000/api/shop/categories/', { next: { revalidate: 300 } });
     const data = await r.json();
     return data.results || data;
   } catch { return []; }
@@ -45,7 +45,7 @@ async function getCategories(): Promise<Category[]> {
 
 async function getBrands(): Promise<Brand[]> {
   try {
-    const r = await fetch('http://localhost:8000/api/shop/brands/', { next: { revalidate: 300 } });
+    const r = await fetch('http://127.0.0.1:8000/api/shop/brands/', { next: { revalidate: 300 } });
     const data = await r.json();
     return data.results || data;
   } catch { return []; }
@@ -53,7 +53,7 @@ async function getBrands(): Promise<Brand[]> {
 
 async function getProducts(params: URLSearchParams): Promise<PaginatedResponse<Product>> {
   try {
-    const r = await fetch(`http://localhost:8000/api/shop/products/?${params.toString()}`, { cache: 'no-store' });
+    const r = await fetch(`http://127.0.0.1:8000/api/shop/products/?${params.toString()}`, { cache: 'no-store' });
     return r.json();
   } catch { return { count: 0, next: null, previous: null, results: [] }; }
 }

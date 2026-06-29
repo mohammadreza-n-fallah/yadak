@@ -19,7 +19,7 @@ interface Props {
 
 async function getCategory(slug: string): Promise<Category | null> {
   try {
-    const r = await fetch(`http://localhost:8000/api/shop/categories/${slug}/`, { next: { revalidate: 300 } });
+    const r = await fetch(`http://127.0.0.1:8000/api/shop/categories/${slug}/`, { next: { revalidate: 300 } });
     if (!r.ok) return null;
     return r.json();
   } catch { return null; }
@@ -27,7 +27,7 @@ async function getCategory(slug: string): Promise<Category | null> {
 
 async function getCategories(): Promise<Category[]> {
   try {
-    const r = await fetch('http://localhost:8000/api/shop/categories/', { next: { revalidate: 300 } });
+    const r = await fetch('http://127.0.0.1:8000/api/shop/categories/', { next: { revalidate: 300 } });
     const d = await r.json();
     return d.results || d;
   } catch { return []; }
@@ -35,7 +35,7 @@ async function getCategories(): Promise<Category[]> {
 
 async function getBrands(): Promise<Brand[]> {
   try {
-    const r = await fetch('http://localhost:8000/api/shop/brands/', { next: { revalidate: 300 } });
+    const r = await fetch('http://127.0.0.1:8000/api/shop/brands/', { next: { revalidate: 300 } });
     const d = await r.json();
     return d.results || d;
   } catch { return []; }
@@ -51,7 +51,7 @@ async function getProducts(categorySlug: string, sp: Record<string, string | und
   if (sp.page) params.set('page', sp.page);
   params.set('ordering', sp.ordering || '-created_at');
   try {
-    const r = await fetch(`http://localhost:8000/api/shop/products/?${params}`, { cache: 'no-store' });
+    const r = await fetch(`http://127.0.0.1:8000/api/shop/products/?${params}`, { cache: 'no-store' });
     if (!r.ok) return { count: 0, next: null, previous: null, results: [] };
     return r.json();
   } catch { return { count: 0, next: null, previous: null, results: [] }; }

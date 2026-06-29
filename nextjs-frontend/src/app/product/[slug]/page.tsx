@@ -17,7 +17,7 @@ function stripHtml(html: string): string {
 
 async function getProduct(slug: string): Promise<Product | null> {
   try {
-    const r = await fetch(`http://localhost:8000/api/shop/products/${slug}/`, { next: { revalidate: 60 } });
+    const r = await fetch(`http://127.0.0.1:8000/api/shop/products/${slug}/`, { next: { revalidate: 60 } });
     if (!r.ok) return null;
     return r.json();
   } catch { return null; }

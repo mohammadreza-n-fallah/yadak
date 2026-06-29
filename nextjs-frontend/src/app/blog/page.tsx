@@ -16,7 +16,7 @@ interface SearchParams { page?: string; category?: string; search?: string }
 
 async function getPosts(params: URLSearchParams): Promise<PaginatedResponse<Post>> {
   try {
-    const r = await fetch(`http://localhost:8000/api/blog/?${params.toString()}`, { next: { revalidate: 60 } });
+    const r = await fetch(`http://127.0.0.1:8000/api/blog/?${params.toString()}`, { next: { revalidate: 60 } });
     if (!r.ok) return { count: 0, next: null, previous: null, results: [] };
     return r.json();
   } catch { return { count: 0, next: null, previous: null, results: [] }; }
@@ -24,7 +24,7 @@ async function getPosts(params: URLSearchParams): Promise<PaginatedResponse<Post
 
 async function getCategories(): Promise<{ id: number; name: string; slug: string }[]> {
   try {
-    const r = await fetch('http://localhost:8000/api/blog/categories/', { next: { revalidate: 300 } });
+    const r = await fetch('http://127.0.0.1:8000/api/blog/categories/', { next: { revalidate: 300 } });
     if (!r.ok) return [];
     return r.json();
   } catch { return []; }

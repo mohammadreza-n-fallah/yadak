@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
-    const r = await fetch('http://localhost:8000/api/settings/', { next: { revalidate: 3600 } });
+    const r = await fetch('http://127.0.0.1:8000/api/settings/', { next: { revalidate: 3600 } });
     if (!r.ok) return null;
     return r.json();
   } catch { return null; }
