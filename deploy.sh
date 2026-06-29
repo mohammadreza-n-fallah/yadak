@@ -38,7 +38,7 @@ npm ci
 npm run build
 
 echo "==> [5/6] Restart services"
-sudo systemctl restart ys-gunicorn
-sudo systemctl restart ys-next
+sudo systemctl restart osh-gunicorn
+sudo systemctl restart osh-next
 
 echo "==> [6/6] Done. Live at your domain."

@@ -237,7 +237,7 @@ export const adminApi = {
 
 export const mediaUrl = (path: string | null | undefined) => {
   if (!path) return '/placeholder.jpg';
-  if (path.startsWith('http')) return path;
+  if (path.startsWith('http')) return path.replace(/https?:\/\/(127\.0\.0\.1|localhost):8000/, API_BASE);
   return `${API_BASE}${path}`;
 };
 
