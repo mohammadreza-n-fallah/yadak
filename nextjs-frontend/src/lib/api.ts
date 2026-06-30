@@ -16,12 +16,26 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Auto-refresh token on 401
+// Fully clear the session: tokens AND the persisted auth store. Without this
+// the store can stay `isAuthenticated: true` while the token is gone, so every
+// request 401s with "Authentication credentials were not provided". The dynamic
+// import avoids a circular dependency (store/* imports this module).
+async function forceLogout() {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
+  try {
+    const { useAuthStore } = await import('@/store/auth');
+    useAuthStore.getState().logout();
+  } catch { /* store unavailable (SSR) */ }
+}
+
+// Auto-refresh token on 401, and log out cleanly when the session is truly gone.
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
     const original = error.config;
-    if (error.response?.status === 401 && !original._retry) {
+    if (error.response?.status === 401 && original && !original._retry) {
       original._retry = true;
       const refresh = typeof window !== 'undefined' ? localStorage.getItem('refresh_token') : null;
       if (refresh) {
@@ -31,11 +45,12 @@ api.interceptors.response.use(
           original.headers.Authorization = `Bearer ${data.access}`;
           return api(original);
         } catch {
-          if (typeof window !== 'undefined') {
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
-          }
+          await forceLogout();
         }
+      } else {
+        // 401 with no refresh token → the session is invalid; reset auth state
+        // so the UI shows /login instead of looping on tokenless requests.
+        await forceLogout();
       }
     }
     return Promise.reject(error);

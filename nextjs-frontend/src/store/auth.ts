@@ -53,6 +53,17 @@ export const useAuthStore = create<AuthState>()(
       name: 'auth-store',
       storage: safeStorage,
       onRehydrateStorage: () => (state) => {
+        // Self-heal a desynced session: if we persisted "authenticated" but the
+        // raw access token is gone (e.g. a failed refresh cleared it), drop back
+        // to logged-out. Otherwise the app fires tokenless API calls that 401
+        // with "Authentication credentials were not provided".
+        if (state && state.isAuthenticated && typeof window !== 'undefined'
+            && !localStorage.getItem('access_token')) {
+          state.user = null;
+          state.accessToken = null;
+          state.refreshToken = null;
+          state.isAuthenticated = false;
+        }
         state?.setHasHydrated(true);
       },
     }
