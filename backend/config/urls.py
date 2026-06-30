@@ -8,7 +8,7 @@ admin.site.site_title = settings.ADMIN_SITE_TITLE
 admin.site.index_title = settings.ADMIN_INDEX_TITLE
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('django-admin/', admin.site.urls),
     path('api/auth/', include('accounts.urls')),
     path('api/vehicles/', include('vehicles.urls')),
     path('api/shop/', include('shop.urls')),
