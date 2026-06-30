@@ -6,8 +6,17 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 from .models import User, Address
-from .serializers import RegisterSerializer, UserSerializer, AddressSerializer
+from .serializers import (
+    RegisterSerializer, UserSerializer, AddressSerializer,
+    EmailOrUsernameTokenObtainPairSerializer,
+)
+
+
+class LoginView(TokenObtainPairView):
+    """JWT login that accepts a username or an email."""
+    serializer_class = EmailOrUsernameTokenObtainPairSerializer
 
 
 class RegisterView(generics.CreateAPIView):

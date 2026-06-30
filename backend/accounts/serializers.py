@@ -1,5 +1,6 @@
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import User, Address
 
 
@@ -37,3 +38,20 @@ class AddressSerializer(serializers.ModelSerializer):
         model = Address
         fields = '__all__'
         read_only_fields = ('user',)
+
+
+class EmailOrUsernameTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """Let users sign in with EITHER their username or their email.
+
+    The login form accepts "username or email"; the default SimpleJWT
+    serializer only matches the username. If the supplied value looks like an
+    email and isn't itself a username, swap in the matching user's username
+    before the normal credential check runs.
+    """
+    def validate(self, attrs):
+        login = attrs.get(self.username_field, '')
+        if login and '@' in login and not User.objects.filter(username=login).exists():
+            match = User.objects.filter(email__iexact=login).order_by('id').first()
+            if match:
+                attrs[self.username_field] = match.username
+        return super().validate(attrs)
