@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, permissions, status, filters
+from rest_framework import generics, permissions, status, filters, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Category, Brand, Product, ProductReview, Wishlist, Banner
@@ -76,6 +76,12 @@ class ProductReviewCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         product = generics.get_object_or_404(Product, slug=self.kwargs['slug'])
+        # One review per user per product (unique_together). Return a clean 400
+        # instead of letting the DB IntegrityError surface as a 500.
+        if ProductReview.objects.filter(product=product, user=self.request.user).exists():
+            raise serializers.ValidationError(
+                {'detail': 'شما قبلاً برای این محصول نقد ثبت کرده‌اید.'}
+            )
         serializer.save(user=self.request.user, product=product)
 
 

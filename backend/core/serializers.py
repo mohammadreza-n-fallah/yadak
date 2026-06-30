@@ -3,6 +3,10 @@ from .models import Newsletter, ContactMessage, SiteSettings
 
 
 class NewsletterSerializer(serializers.ModelSerializer):
+    # Drop the auto UniqueValidator so a returning subscriber gets the view's
+    # friendly "already subscribed"/reactivate response instead of a raw 400.
+    email = serializers.EmailField(validators=[])
+
     class Meta:
         model = Newsletter
         fields = ('email',)

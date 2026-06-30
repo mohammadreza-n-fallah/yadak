@@ -149,7 +149,9 @@ if _csrf_origins:
 
 # Zarinpal
 ZARINPAL_MERCHANT_ID = os.environ.get('ZARINPAL_MERCHANT_ID', 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')
-ZARINPAL_SANDBOX = True
+# Defaults to sandbox. To accept live payments set ZARINPAL_SANDBOX=false in the
+# production .env together with a real ZARINPAL_MERCHANT_ID from zarinpal.ir.
+ZARINPAL_SANDBOX = os.environ.get('ZARINPAL_SANDBOX', 'true').lower() == 'true'
 ZARINPAL_BASE_URL = (
     'https://sandbox.zarinpal.com/pg/v4/payment/'
     if ZARINPAL_SANDBOX

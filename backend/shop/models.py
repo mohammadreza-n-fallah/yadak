@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from vehicles.models import VehicleBrand, VehicleModel, VehicleTrim
@@ -57,8 +59,8 @@ class Product(models.Model):
     part_number = models.CharField('شماره قطعه', max_length=100, blank=True)
     description = models.TextField('توضیحات', blank=True)
     short_description = models.TextField('توضیح کوتاه', blank=True)
-    price = models.DecimalField('قیمت (ریال)', max_digits=14, decimal_places=0, validators=[MinValueValidator(0)])
-    sale_price = models.DecimalField('قیمت حراج (ریال)', max_digits=14, decimal_places=0, null=True, blank=True, validators=[MinValueValidator(0)])
+    price = models.DecimalField('قیمت (ریال)', max_digits=14, decimal_places=0, validators=[MinValueValidator(Decimal('0'))])
+    sale_price = models.DecimalField('قیمت حراج (ریال)', max_digits=14, decimal_places=0, null=True, blank=True, validators=[MinValueValidator(Decimal('0'))])
     stock = models.PositiveIntegerField('موجودی', default=0)
     badge = models.CharField('برچسب', max_length=20, choices=BADGE_CHOICES, blank=True)
     is_active = models.BooleanField('فعال', default=True)

@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.db.models import F
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import generics, permissions, status
@@ -125,10 +125,10 @@ class CheckoutView(APIView):
                 quantity=item.quantity,
                 subtotal=item.subtotal,
             )
-            # Deduct stock atomically
-            Product.objects.filter(pk=item.product.pk).update(stock=F('stock') - item.quantity)
-
-        cart.items.all().delete()
+        # NOTE: stock is deducted and the cart cleared only once the payment is
+        # CONFIRMED (see PaymentVerifyView). Reserving inventory here would leak
+        # stock on every abandoned/failed payment and strand the user with an
+        # empty cart and no way to retry.
 
         # Initiate Zarinpal payment
         callback_url = f'{settings.SITE_URL}/api/orders/payment/verify/?order={order.order_number}'
@@ -141,9 +141,7 @@ class CheckoutView(APIView):
         )
 
         if 'error' in result:
-            # Restore stock and remove order since payment gateway failed
-            for item in cart_items:
-                Product.objects.filter(pk=item.product.pk).update(stock=F('stock') + item.quantity)
+            # Nothing was deducted yet, so simply drop the unpaid order.
             order.delete()
             return Response({'error': f'خطا در اتصال به درگاه پرداخت: {result["error"]}'},
                             status=status.HTTP_503_SERVICE_UNAVAILABLE)
@@ -162,6 +160,22 @@ class CheckoutView(APIView):
 class PaymentVerifyView(APIView):
     permission_classes = [permissions.AllowAny]
 
+    def _fail(self, frontend_url, order, payment):
+        """Mark the order/payment failed (idempotent) and bounce to the failure page.
+
+        No stock was deducted at checkout, so there is nothing to restore — the
+        order is kept and the customer's cart is left intact so they can retry.
+        """
+        if payment and payment.status != 'failed':
+            payment.status = 'failed'
+            payment.save(update_fields=['status'])
+        if order.payment_status not in ('paid', 'failed'):
+            order.payment_status = 'failed'
+            order.save(update_fields=['payment_status'])
+        return HttpResponseRedirect(
+            f'{frontend_url}/payment/verify?status=failed&order_number={order.order_number}'
+        )
+
     def get(self, request):
         frontend_url = settings.FRONTEND_URL
         order_number = request.query_params.get('order')
@@ -171,32 +185,50 @@ class PaymentVerifyView(APIView):
         order = get_object_or_404(Order, order_number=order_number)
         payment = order.payments.filter(authority=authority).first()
 
-        if pay_status != 'OK' or not payment:
-            if payment:
-                payment.status = 'failed'
-                payment.save()
-            order.payment_status = 'failed'
-            order.save()
+        # Idempotency: a repeated callback for an already-paid order is a no-op.
+        if order.payment_status == 'paid':
+            ref = order.payments.filter(status='success').values_list('ref_id', flat=True).first() or ''
             return HttpResponseRedirect(
-                f'{frontend_url}/payment/verify?status=failed&order_number={order_number}'
+                f'{frontend_url}/payment/verify?status=success&ref_id={ref}&order_number={order.order_number}'
             )
+
+        if pay_status != 'OK' or not payment:
+            return self._fail(frontend_url, order, payment)
 
         result = zarinpal.verify_payment(int(payment.amount), authority)
         if 'error' in result:
-            payment.status = 'failed'
-            payment.save()
-            order.payment_status = 'failed'
-            order.save()
-            return HttpResponseRedirect(
-                f'{frontend_url}/payment/verify?status=failed&order_number={order_number}'
-            )
+            return self._fail(frontend_url, order, payment)
 
-        payment.ref_id = result['ref_id']
-        payment.status = 'success'
-        payment.save()
-        order.payment_status = 'paid'
-        order.status = 'processing'
-        order.save()
+        # Payment confirmed → now deduct stock and clear the cart, atomically.
+        with transaction.atomic():
+            short = []
+            for item in order.items.select_related('product'):
+                if not item.product_id:
+                    continue
+                product = Product.objects.select_for_update().get(pk=item.product_id)
+                if product.stock >= item.quantity:
+                    product.stock -= item.quantity
+                else:
+                    # Rare race: someone else bought it after checkout. Honour the
+                    # paid order, clamp stock to zero, and flag it for staff.
+                    short.append(product.name)
+                    product.stock = 0
+                product.save(update_fields=['stock'])
+
+            if order.user_id:
+                cart = Cart.objects.filter(user=order.user).first()
+                if cart:
+                    cart.items.all().delete()
+
+            payment.ref_id = result['ref_id']
+            payment.status = 'success'
+            payment.save(update_fields=['ref_id', 'status'])
+            order.payment_status = 'paid'
+            order.status = 'processing'
+            if short:
+                flag = 'کسری موجودی هنگام تایید پرداخت: ' + '، '.join(short)
+                order.note = f'{order.note} | {flag}' if order.note else flag
+            order.save()
 
         return HttpResponseRedirect(
             f'{frontend_url}/payment/verify?status=success'
