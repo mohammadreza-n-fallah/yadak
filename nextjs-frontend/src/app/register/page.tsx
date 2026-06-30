@@ -23,6 +23,13 @@ export default function RegisterPage() {
     try {
       await authApi.register(form);
       const { data } = await authApi.login(form.username, form.password);
+      // Store tokens BEFORE fetching the profile: the axios request interceptor
+      // reads the access token from localStorage to set the Authorization header.
+      // Without this, profile() goes out tokenless and 401s with
+      // "Authentication credentials were not provided" (the account is already
+      // created by then, so a retry collides with "username already exists").
+      localStorage.setItem('access_token', data.access);
+      localStorage.setItem('refresh_token', data.refresh);
       const profileRes = await authApi.profile();
       login(data.access, data.refresh, profileRes.data);
       toast.success('ثبت‌نام با موفقیت انجام شد');
