@@ -54,7 +54,9 @@ async function getBrands(): Promise<Brand[]> {
 async function getProducts(params: URLSearchParams): Promise<PaginatedResponse<Product>> {
   try {
     const r = await fetch(`http://127.0.0.1:8000/api/shop/products/?${params.toString()}`, { cache: 'no-store' });
-    return r.json();
+    if (!r.ok) return { count: 0, next: null, previous: null, results: [] };
+    const data = await r.json();
+    return { count: data.count ?? 0, next: data.next ?? null, previous: data.previous ?? null, results: data.results ?? [] };
   } catch { return { count: 0, next: null, previous: null, results: [] }; }
 }
 
@@ -89,7 +91,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
     getProducts(params),
   ]);
 
-  const totalPages = Math.ceil(productsData.count / 12);
+  const totalPages = Math.ceil(productsData.count / 10);
 
   const extraParams = new URLSearchParams();
   if (ordering) extraParams.set('ordering', ordering);

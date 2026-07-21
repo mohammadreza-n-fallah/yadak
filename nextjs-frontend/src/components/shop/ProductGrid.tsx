@@ -2,7 +2,7 @@ import ProductCard from './ProductCard';
 import { Product } from '@/types';
 
 export default function ProductGrid({ products }: { products: Product[] }) {
-  if (!products.length) {
+  if (!products?.length) {
     return (
       <div className="text-center py-16 text-muted">
         <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -53,7 +53,8 @@ async function getProducts(categorySlug: string, sp: Record<string, string | und
   try {
     const r = await fetch(`http://127.0.0.1:8000/api/shop/products/?${params}`, { cache: 'no-store' });
     if (!r.ok) return { count: 0, next: null, previous: null, results: [] };
-    return r.json();
+    const data = await r.json();
+    return { count: data.count ?? 0, next: data.next ?? null, previous: data.previous ?? null, results: data.results ?? [] };
   } catch { return { count: 0, next: null, previous: null, results: [] }; }
 }
 
@@ -88,7 +89,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   if (!category) notFound();
 
   const page = +(sp.page || '1');
-  const totalPages = Math.ceil(productsData.count / 20);
+  const totalPages = Math.ceil(productsData.count / 10);
 
   // Build extra params string for Pagination (all current params except page)
   const extraParamsObj = { ...sp };
@@ -181,7 +182,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             </div>
           )}
 
-          {productsData.results.length === 0 ? (
+          {!productsData.results?.length ? (
             <div className="text-center py-20 card p-10">
               <div className="text-5xl mb-4">🔍</div>
               <h2 className="font-bold text-dark-2 mb-2">محصولی یافت نشد</h2>
