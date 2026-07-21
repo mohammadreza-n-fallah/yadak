@@ -81,7 +81,7 @@ export default function VehicleFinder() {
           </span>
         </h1>
         <p className="text-gray-400 mb-10 text-sm md:text-base max-w-sm mx-auto">
-          از پورش تا پراید — جستجوی هوشمند بر اساس مدل خودرو
+           قطعه هر خودرویی — جستجوی هوشمند بر اساس مدل خودرو
         </p>
 
         {/* Form panel */}

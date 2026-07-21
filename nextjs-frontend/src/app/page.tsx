@@ -10,7 +10,7 @@ import { mediaUrl, formatPrice } from '@/lib/api';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://autoparts.ir';
 
 export const metadata: Metadata = {
-  title: 'یدک استوریج | خرید آنلاین لوازم یدکی اصل',
+  title: 'یدک استوریج | فروشگاه خرید لوازم یدکی خودرو',
   description: 'بزرگ‌ترین فروشگاه آنلاین قطعات خودرو در ایران. خرید آسان لوازم یدکی اصل برای انواع خودروهای ایرانی و خارجی با ضمانت اصالت، قیمت مناسب و ارسال سریع.',
   openGraph: {
     title: 'یدک استوریج | خرید آنلاین لوازم یدکی اصل',

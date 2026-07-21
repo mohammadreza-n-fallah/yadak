@@ -6,7 +6,7 @@ import { SiteSettings } from '@/types';
 import toast from 'react-hot-toast';
 
 const DEFAULTS: Partial<SiteSettings> = {
-  phone: '۰۲۱-۱۲۳۴۵۶۷۸',
+  phone: '09015999055',
   email: 'info@autoparts.ir',
   address: 'خیابان ملت بازار چراغ برق',
   working_hours: 'شنبه تا چهارشنبه ۹–۱۸',
@@ -213,7 +213,25 @@ export default function Footer() {
                     </svg>
                   </a>
                 )}
+
+ <a
+      href="https://trustseal.enamad.ir/?id=753917&Code=PbncUJZpMwWsru8Pyd7s83ohGdwAtc5R"
+      target="_blank"
+      rel="noopener noreferrer"
+      referrerPolicy="origin"
+    >
+      <img
+        src="https://trustseal.enamad.ir/logo.aspx?id=753917&Code=PbncUJZpMwWsru8Pyd7s83ohGdwAtc5R"
+        alt="Enamad Trust Seal"
+        referrerPolicy="origin"
+        style={{ cursor: "pointer" }}
+        width={125}
+        height={125}
+      />
+    </a>  
+
               </div>
+
             )}
           </div>
         </div>
